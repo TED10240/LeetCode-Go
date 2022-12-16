@@ -39,6 +39,33 @@ func findCombination(digits *string, index int, s string) {
 	return
 }
 
+// 解法二 非递归
+func letterCombinations_(digits string) []string {
+	if digits == "" {
+		return []string{}
+	}
+	index := digits[0] - '0'
+	letter := letterMap[index]
+	tmp := []string{}
+	for i := 0; i < len(letter); i++ {
+		if len(res) == 0 {
+			res = append(res, "")
+		}
+		for j := 0; j < len(res); j++ {
+			tmp = append(tmp, res[j]+string(letter[i]))
+		}
+	}
+	res = tmp
+	final++
+	letterCombinations_(digits[1:])
+	final--
+	if final == 0 {
+		tmp = res
+		res = []string{}
+	}
+	return tmp
+}
+
 // 解法三 回溯(参考回溯末班，类似DFS)
 var result []string
 var dict = map[string][]string{
